@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      name: myapp
+      labels:
+        app: myapp
+      annotations:
+        # The OpenTelemetryCollector (mode sidecar) resource must be created first
+        sidecar.opentelemetry.io/inject: "true"
+        # The Instrumentation resource must be created first
+        instrumentation.opentelemetry.io/inject-java: "true"
+    spec:
+      containers:
+        - name: myapp
+          image: jaegertracing/vertx-create-span:operator-e2e-tests
+          ports:
+            - containerPort: 8080
