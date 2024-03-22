@@ -48,6 +48,7 @@ metadata:
   name: collector
 spec:
   # Automatic resource update in the event of an operator update
+  # Be careful with the "none" value, as there is a risk of version dephasing between OTel Operator and Collector
   upgradeStrategy: automatic
   mode: <deployment | statefulset | daemonset | sidecar>
   config: |
